@@ -1,0 +1,73 @@
+Concept Profiling: Automatic Generation of Elemental and Composite Concepts in Learning Modules
+
+
+1. Introduction
+
+As independent learning continues to climb in popularity, it is increasingly important to provide learners with tools to help learners with decision making and independent curriculum planning. One advantage of online education is that flexibly designed learning modules can be adapted to the individual needs. For example, a learner can combine modules from multiple MOOCs in a flexible way.  
+
+However, it can be challenging for learners to select the best/right modules for them to learn for multiple reasons: (1) Unliked a regular course that has a pre-defined structure,
+ such flexibly combined modules do not have pre-defined pre-requisite guidelines, making it a challenge for learners to assess whether they have sufficient background for taking a target module before actually taking the module. The problem is worsen by the fact that learners are of variable background, often not aligned well with the pre-requisite of a target module. 
+(2) Their variable background also makes it hard to pre-assess what major concepts they can expect to learn from a particular target module. 
+
+To address these challenges, we propose to automatically build concept profiles for online learning modules, which can help learners quickly decide whether a module is suitble for their needs. A concept profile consists of two kinds of concepts: 1) Elemental Concepts which are basic concepts used in a learning module, but not explained in the module; elemental concepts are useful for helping a learner assess whether the learner has the needed background to learn the module. 2) Composite Concepts which are advanced concepts representing the major topics explained in the module; composite concepts can serve as a useful preview of the concepts that a learner can expect to learn from the module.
+
+
+We propose and study methods for discovering and identifying Elemental and Composite concepts from instructional text data such as textbooks and MOOC video lecture transcripts to build a Concept Profile for a learning module. Evaluation results on several Coursera MOOCs show promising results of the proposed methods, demonstrating the feasibility of automatic construction of useful concept profiles for online learning modules.
+
+2. Related Work
+
+3. Problem Formulation
+
+Define the computation problem. What's the input? What's the output?
+
+Output: A ranked lists of M elemental concepts + a ranked list of N composite concepts, where M and N are parameters. Or perhaps just a ranked list of each type of concepts without a cutoff, which would make it like search results and the learner can decide where to stop. 
+
+Claim that despite much work on concept extraction, such a concept profiling problem hasn't been studied. 
+
+4. Methods for Concept Profiling
+
+4.1 Overview
+
+Here we give a high-level description of the overall method which consists of two steps: 1) extraction of concepts and 2) further extraction of elemental concepts and composite concepts.
+
+4.2 Concept Extraction
+
+Here, we describe our method for concept extraction. Can the neural network be applied here? 
+
+We could say that we just use existing methods for this step, but if there's anything interesting to say here, e.g., using NN, or leveraging book index as training data, we should say that. 
+
+4.3 Discovery of elelmental and composite concepts
+
+Here we describe the proposed (new) methods for discovering the two kinds of concepts. 
+
+Since this is a new challenge, we should devote most of our effort here to improve the methods. We may also propose multiple strategies if possible. 
+
+
+5. Evaluation 
+
+5.1 Data Sets
+
+5.2 Experiment Design
+
+5.3 Experiment Results
+
+5.3.1 Qualitative Analysis
+
+Here we show sample ranked lists (top-k) for multiple MOOCs, and discuss the quality of the results. We want to show that they can indeed be useful to help learners assess the pre-requisite and the major concepts taught in a module. 
+
+5.3.2 Quantitative Analysis
+
+Here we use the Text Retrieval MOOC to do quantitative evaluation, mainly to compare different methods and see which method is the best or examine how we can improve the accuracy. But we can also quantify the accuracy to understand the utility of the proposed methods. 
+This should allow us to draw conclusions about which method/idea works the best.
+
+5.3.3 Error analysis
+
+Do some analysis to understand where the proposed methods make mistakes. This helps identifying additional challenges for future study. 
+
+6. Conclusions and Future Work
+
+ 
+
+
+
+ 

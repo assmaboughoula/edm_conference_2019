@@ -1,0 +1,31 @@
+\section{Problem Formulation}
+
+%Define the computation problem. What's the input? What's the output?
+
+%Output: A ranked lists of M elemental concepts + a ranked list of N composite concepts, where M and N are parameters. Or perhaps just a ranked list of each type of concepts without a cutoff, which would make it like search results and the learner can decide where to stop. 
+
+%Claim that despite much work on concept extraction, such a concept profiling problem hasn't been studied. 
+%overview
+In this paper, we study the problem of generating concept profiles for learning modules. Subsection \ref{Definitions} provides our working definitions for the following terms: learning modules, concepts and how we will represent them, and concept profiles. Subsection \ref{Elemental and Composite Concepts} introduces the novel idea of Elemental concepts and Composite concepts and how they exist in the concept space.
+
+\subsection{Definitions}
+\subsubsection{Learning Module}
+A learning module is a clearly defined finite unit of teaching content that has a beginning and an end. This is an important point for our subsequent description of Elemental and Composite concepts. Examples of learning modules include: a traditionally taught course, a MOOC courses, or a textbook. One learning module can be composed of a set of learning modules too. For example: a Coursera MOOC can be divided into weekly submodules; a textbook can be divided into chapters, which in turn are learning modules.
+It is assumed that each learning module has a set of prerequisite concepts and a finite set of objective concepts which are taught in the module.
+For our purposes in this paper, a learning module is represented by the text-based data used to teach the content. For example the required textbook for a course, or the lecture transcripts for a MOOC.
+\subsubsection{Concept Representation}
+There have been many works exploring the problem of concept representation. 
+% add citations here
+In this paper, we represent a concept as a salient phrase. For example in a text retrieval course, concepts can be: $C_{1} = “TFIDF weighting”$ , $C_{2} = “BM25”$ , and $C_{3}=“KL-divergence”$. It can be pointed out that our concept representation might not be the most precise, namely we do not try to group phrases into sets of phrases that all represent the same concept as might be the case in natural language text. For example “KL-divergence” and “Kullbek Lieber distance” both reference the same concept and so should logically be grouped together. But such cases of diverse concept phrases are rare in the data-sets used in our work did not present a significant problem or ambiguity
+of results. Thus, for now we leave this problem as future work.
+\subsubsection{Concept Profile}
+A concept profile of a learning module consists of a set of concepts that are mentioned or discussed in the module. These concepts include new concepts that are taught as part of the module’s learning objectives, and prerequisite concepts that are used to explain the objective concepts in the module. This concept profile gives learners a snapshot of the module’s breadth and scope. 
+% add how this is useful. here or in intro?
+
+\subsection{Elemental and Composite Concepts}
+%Concept space section from NAACL
+As was briefly mentioned above; all concepts in a learning module's concept profile are not equal.
+We divide the concepts in a module's concept profile into two main categories: \textit{elemental} concepts and \textit{composite} concepts. 
+We deAn elemental concept is a concept that cannot be further reduced into, or described by, one or more simpler concepts. For example, the concept of a \textit{number} is an elemental concept in mathematics, which cannot be reduced or explained in terms of other concepts. The concept of \textit{multiplication}, however, is an example of a \textit{composite} concept in mathematics as the concepts of \textit{numbers} and \textit{addition} can be used to describe multiplication. In the context of a course however, elemental concepts can be defined as concepts that students already know before starting the course. Composite concepts are then defined as the concepts which will be taught over the course of the class, and which will need to be explained by one or more concepts.
+By modeling our problem this way, our task is to construct the concept space given text data from a course; this can be the required textbook(s) or complete lecture transcripts, for example. Inferring which extracted concepts are \textit{Elemental} and which are \textit{Composite} involves grouping concepts to represent composite concepts that are higher up in the hierarchical structure of the concept space.
+%include a figure
