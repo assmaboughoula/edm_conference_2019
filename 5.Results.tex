@@ -14,12 +14,17 @@ For each one of our six data sets (2 textbooks and 4 MOOCs), we ran the Layered 
 
 \subsection{Experiment Results}\label{exp_results}
 % AIDAN: are there any initialization parameters for the concept extraction LSTM?
-Table \ref{} presents the initialization values for the parameters $INIT_CLUSTERS$, $min_p$, and $min_q$ for each of our data sets when running the Layered Fuzzy C-Means algorithm. The following subsection \ref{qualitative} discusses the qualitative results obtained from these runs and presents visualizations for the layer clusters and EC Scores.
+Table \ref{} presents the initialization values for the parameters $INIT\_CLUSTERS$, $min_p$, and $min_q$ for each of our data sets when running the Layered Fuzzy C-Means algorithm. The following subsection \ref{qualitative} discusses the qualitative results obtained from these runs and presents visualizations for the layer clusters and EC Scores.
 
 \subsubsection{Qualitative Analysis}\label{qualitative}
 
 %Here we show sample ranked lists (top-k) for multiple MOOCs, and discuss the quality of the results. We want to show that they can indeed be useful to help learners assess the pre-requisite and the major concepts taught in a module. 
-
+\begin{figure*}[t]
+	\centering	
+	\includegraphics[width=1\textwidth]{figures/han_bidi_clusters_1.png}
+	\caption{Retained layers and clusters for textbook 1: "Data Mining: Concepts and Techniques"}
+	\label{han_clusters}
+\end{figure*}
 
 \subsubsection{Quantitative Analysis}\label{quantitative}
 % AIDAN: ADD RESULTS FOR THE LSTM AND THE PLOTS OF THE ACCURACY/F1 SCORE 
