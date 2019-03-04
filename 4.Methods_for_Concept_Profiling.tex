@@ -1,13 +1,24 @@
 \section{Methods for Concept Profiling}
-\subsection{Overview}
 
-Here we give a high-level description of the overall method which consists of two steps: 1) extraction of concepts and 2) further extraction of elemental concepts and composite concepts.
+%Here we give a high-level description of the overall method which consists of two steps: 1) extraction of concepts and 2) further extraction of elemental concepts and composite concepts.
+In this section we describe our methods for building concept profiles. The process involves two steps: first, given a learning module's text data we need to extract the salient phrases that represent concepts. Subsection \ref{extraction} explores one way of automatically extracting concept phrases from a module's text data when no clear list of concepts is provided such as the case for MOOC courses. The second step in the process is to rank the extracted concepts according to their Elementa/Composite score (hence forth referred to as EC Score).
 
-\subsection{Concept Extraction}
+\subsection{Concept Extraction}\label{extraction}
 
-Here, we describe our method for concept extraction. Can the neural network be applied here? 
+%Here, we describe our method for concept extraction. Can the neural network be applied here? 
 
-We could say that we just use existing methods for this step, but if there's anything interesting to say here, e.g., using NN, or leveraging book index as training data, we should say that. 
+%We could say that we just use existing methods for this step, but if there's anything interesting to say here, e.g., using NN, or leveraging book index as training data, we should say that. 
+
+As we have stated in the Related Work section, the problem of extracting concept phrases from text is not a new one in and of itself. Several semi-supervised and unsupervised methods have been proposed. Autophrase \cite{} and TopMine \cite{} are two notable unsupervised methods for salient phrase mining. In our work, we take a slightly different approach using neural networks.
+
+Since our work pertains specifically to educational applications, we leverage on type of unique text data ubiquitiously available for the vast majority of learning modules: textbooks. Whether a learning module is taught in a traditional class setting or offered to independent learners through MOOCs, the subjects of the vast majority of learning modules have probably been covered by some textbook. What makes textbooks particularly useful to us as opposed to other types of educational text data is that each textbook has an expertly curated, clean, and complete list of concept phrases covered in the textbook; namely the textbook's index. Using the text data and index list of phrases from a textbook, we train a neural network to automatically identify and label concept phrases in other types of educational text data which cover the same subject, such as MOOC lecture transcripts, and which do not have a predefined index. In section \ref{experiment_setup} we describe such a setup using two textbooks and four MOOCs which cover the same topics. In the rest of this section, we describe the design of the auto-indexing neural network we used.
+
+%add old text
+The concept phrase extraction task is given a text document, and asked to determine which words and phrases in the text represent concepts and which do not. For this task we use the raw text from our textbook data sets as documents, and use the index from each textbook as labels. This is quite similar to the NP Chunking problem, wherein we must determine which parts of the text are Noun Phrases. We use a basic IOB (Inside, Outside, Beginning) scheme for our chunking.
+Our neural network is designed to produce a ``B'' tag for the first word in a keyphrase in the textbook's index and then an ``I'' tag for every word following the first word in the same keyphrase. If a word is not part of any keyphrase, then it is tagged with an ``O''.
+
+We used a fairly simple LSTM network to perform the tagging. We split each dataset into 75\% train and 25\% test. We trained each model over 8 epochs. We used a word embedding dimension and a hidden state dimension of 32. We use a single LSTM layer and then an addition linear layer which maps the hidden state of the LSTM to the tag space. We then perform a softmax over our tags. Our prediction is the max over our different tags.
+
 
 \subsection{Discovery of Elemental and Composite Concepts}
 

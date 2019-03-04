@@ -6,7 +6,7 @@
 
 %Claim that despite much work on concept extraction, such a concept profiling problem hasn't been studied. 
 %overview
-In this paper, we study the problem of generating concept profiles for learning modules. Subsection \ref{definitions} provides our working definitions for the following terms: learning modules, concepts and how we will represent them, and concept profiles. Subsection \ref{ec_concepts} introduces the novel idea of Elemental concepts and Composite concepts and how they exist in the concept space. Subsection \ref{formal}
+In this paper, we study the problem of generating concept profiles for learning modules. We assume that we are given a learning module's text-based data such as textbook or lecture transcripts, and our goal is to produce a list of concepts covered in the module ranked according to how elemental or composite they are. Subsection \ref{definitions} provides our working definitions for the following terms: learning modules, concepts and how we will represent them, and concept profiles. Subsection \ref{ec_concepts} introduces the novel idea of Elemental concepts and Composite concepts and how they exist in the concept space.
 
 \subsection{Definitions}\label{definitions}
 \subsubsection{Learning Module}\label{learning_module}
@@ -32,7 +32,3 @@ We define an elemental concept in a learning module as a concept that cannot be 
 Usually in the context of a learning module, elemental concepts can be defined as concepts that learners already know before starting the module. Composite concepts are then defined as the concepts which will be taught over the course of the module, and which will need to be explained by one or more concepts.
 By modeling our problem this way, our task is to construct a concept profile given text data from a learning module; this can be the required textbook(s) or complete lecture transcripts, for example. Inferring which extracted concepts are \textit{Elemental} and which are \textit{Composite} involves ranking concepts according to how Elemental or Composite they are to represent the hierarchical structure of the concept profile.
 %include a figure
-
-%formal Input-Output?
-\subsection{Inputs and Outputs}\label{formal}
-
