@@ -13,18 +13,20 @@ For our experiment, we trained two LSTM models one on each textbook. We ran the 
 For each one of our six data sets (2 textbooks and 4 MOOCs), we ran the Layered Fuzzy C-Means clustering algorithm to get the clusters and retained layers and the ranked list of concepts and their EC Scores. Detailed parameter values and experimental results are presented in \ref{exp_results}
 
 \subsection{Experiment Results}\label{exp_results}
+% AIDAN: are there any initialization parameters for the concept extraction LSTM?
+Table \ref{} presents the initialization values for the parameters $INIT_CLUSTERS$, $min_p$, and $min_q$ for each of our data sets when running the Layered Fuzzy C-Means algorithm. The following subsection \ref{qualitative} discusses the qualitative results obtained from these runs and presents visualizations for the layer clusters and EC Scores.
 
-
-\subsubsection{Qualitative Analysis}
+\subsubsection{Qualitative Analysis}\label{qualitative}
 
 %Here we show sample ranked lists (top-k) for multiple MOOCs, and discuss the quality of the results. We want to show that they can indeed be useful to help learners assess the pre-requisite and the major concepts taught in a module. 
 
-\subsubsection{Quantitative Analysis}
+
+\subsubsection{Quantitative Analysis}\label{quantitative}
 % AIDAN: ADD RESULTS FOR THE LSTM AND THE PLOTS OF THE ACCURACY/F1 SCORE 
 
 %Here we use the Text Retrieval MOOC to do quantitative evaluation, mainly to compare different methods and see which method is the best or examine how we can improve the accuracy. But we can also quantify the accuracy to understand the utility of the proposed methods. 
 %This should allow us to draw conclusions about which method/idea works the best.
 
-\subsubsection{Error analysis}
+\subsubsection{Error analysis}\label{error}
 
 %Do some analysis to understand where the proposed methods make mistakes. This helps identifying additional challenges for future study. 
