@@ -40,7 +40,7 @@ We found that using the bidirectional embedding vectors from our trained LSTM yi
 \subsubsection{Layered Fuzzy C-Means}
 Our Layered Fuzzy C-Means clustering algorithm follows a loosely hierarchical clustering scheme where each iteration or "layer" consists of a run of the Fuzzy C-Means algorithm. The Fuzzy C-Means algorith was first introduced by ... in 198.. \cite{} and later improved by .. \cite{}. It is the standard algorithm for fuzzy clustering; the counterpart to the well known K-Means \cite{}. Fuzzy clustering expresses cluster membership as a probability distribution thus allowing data points to potentially belong to multiple "overlapping" clusters if their cluster membership probability passes a certain threshold. This is important for our purpose since our working hypothesis is that a more Elemental concept would be used to explain other Composite concepts, thus it would make sense for the more Elemental concept to belong to multiple clusters representing the Composite concepts it helps explain. See Figure \ref{concept_space}.
 
-The input for the Layered Fuzzy C-Means is: 1) $X$: a 64 by N matrix which holds the 64 dimensional concept embeddings of the learning module's N extracted concepts from the Concept Extraction step \ref{extraction}, 2) the parameter $INIT\_CLUSTERS$ which is a function of $N$ which specifies the number of clusters in the initial layer, 3) and the parameters $min_p$ and $min_q$ which specify the probability threshold for cluster membership and the clustering quality threshold for retaining layers.
+The input for the Layered Fuzzy C-Means is: 1) $X$: a 64 by N matrix which holds the 64 dimensional concept embeddings of the learning module's N extracted concepts from the Concept Extraction step \ref{extraction}, we will refer to this as the data point matrix, 2) the parameter $INIT\_CLUSTERS$ which is a function of $N$ which specifies the number of clusters in the initial layer, 3) and the parameters $min_p$ and $min_q$ which specify the probability threshold for cluster membership and the clustering quality threshold for retaining layers.
 
 The Layered Fuzzy C-Means outputs: 1) a dictionary of layer cluster membership matrices:  $U = \{i: U_{i} | for\ each\ layer\ i\}$ where each $U_{i}$ is a $C_{i}$ by $N$ matrix where $C_{i}$ is the number of clusters in layer $i$, 2) a dictionary of layer quality indices: $Q = \{i: q_{i} | for\ each\ layer\ i\}$.
 
@@ -62,8 +62,19 @@ h_{k,j} =
 
 where $max_{k,j}(U_{i})$ is the value of the largest membership probability entry in $U_{i}$ and $min_p \in [0,1]$ is a user defined input to the Layered Fuzzy C-Means.
 
-\subsubsection{Pruning for Quality Layers}\label{pruning_layers}
+One important thing to notice here is that in each layer, there can be data points (concepts) that belong to more than one cluster (the sum of their column in $H_{i}$ is greater than 1), as well as data points that belong to no cluster (the sum of their column in $H_{i}$ is equal to 0).
 
+\subsubsection{Pruning for Quality Layers}\label{pruning_layers}
+Once we calculate the $H_{i}$ matrix for each layer $i$, we still need to prune the layers to retain only layers that contain good quality clustering. This is an important step in addition to the previous postprocessing step because in the previous step, even though we restrict cluster membership to probabilities that pass the minimum probability threshold, this minimum probability threshold is dependent on the probability distribution of $U_{i}$ and thus does not guarantee us a layer with good quality clusters. To understand this more clearly, suppose for a layer $i$, $max_{k,j}(U_{i}) \approx 1/N$ meaning that for this layer, membership probabilities are more or less uniformly distributed. We will end up with a $H_{i}$ matrix of mostly 1's, which is a very bad quality clustering. Thus it is still important to prune such layers out.
+
+To determine whether or not to retain a layer, we use the Calinski Harabaz Index (CH Index)and the user defined $min_q$ threshold. The CH Index is calculated as:
+
+\begin{equation}
+\text{HC-Index_{i}} = \frac{B_{i}(k)}{W_{i}(k)}\frac{N-k}{k-1}
+\end{equation}
+
+where $B_{i}(k)$ measures the between cluster variance of the $k$ clusters in layer $i$, and $W_{i}(k)$ is the sum of the within cluster variances of the $k$ clusters in layer $i$. The intuition behind the HC Index is that layers with higher HC Index contain tighter and well separated clusters.
+We calculate $HC-Index_{i}$ for each layer $i$ and store it in the layer quality index dictionary $Q$ as $q_{i}$. Finally, we only retain layers with $q_{i} \geq max_{i}(q_{i}) * min_q$.
 
 \subsubsection{Computing the EC Score}\label{calc_ec}
 
