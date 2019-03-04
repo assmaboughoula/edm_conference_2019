@@ -70,7 +70,7 @@ Once we calculate the $H_{i}$ matrix for each layer $i$, we still need to prune 
 To determine whether or not to retain a layer, we use the Calinski Harabaz Index (CH Index)and the user defined $min_q$ threshold. The CH Index is calculated as:
 
 \begin{equation}
-\text{HC-Index_{i}} = \frac{B_{i}(k)}{W_{i}(k)}\frac{N-k}{k-1}
+HC-Index_{i} = \frac{B_{i}(k)}{W_{i}(k)}\frac{N-k}{k-1}
 \end{equation}
 
 where $B_{i}(k)$ measures the between cluster variance of the $k$ clusters in layer $i$, and $W_{i}(k)$ is the sum of the within cluster variances of the $k$ clusters in layer $i$. The intuition behind the HC Index is that layers with higher HC Index contain tighter and well separated clusters.
