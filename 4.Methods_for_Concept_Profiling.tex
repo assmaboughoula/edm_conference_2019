@@ -21,7 +21,7 @@ We used a fairly simple LSTM network to perform the tagging. We split each datas
 %add figure of NN setup
 
 
-\subsection{Discovery of Elemental and Composite Concepts}
+\subsection{Building the Concept Profile}
 
 %Here we describe the proposed (new) methods for discovering the two kinds of concepts. 
 
@@ -29,6 +29,8 @@ We used a fairly simple LSTM network to perform the tagging. We split each datas
 
 The intuition behind our method for ranking concepts according to their EC Score is the observation that in a learning module, new concepts are introduced using other more elemental concepts. For example, in Caclulus, the concept "derivative" can be introduced to students using concepts such as "function", "slope", and "tangent". Later on in Multivariabel Calculus, "differential" and "derivative" can be used to introduce the concept of "partial derivative" to students. In general, a learning module's Concept Profile follows a roughly hierarchical structure with more Elemental concepts being used to explain or introduce more Composite concepts on the EC Score scale. Figure \ref{concept_space} illustrates this roughly hierarchical layered clusters structure to the learning module's Concept Profile. Intuitively, we expect that the more Elemental a concept is, the more clusters it is a part of, whereas the more Composite a concept is, the less clusters it appears in. This makes sense because more Elemental concepts can be used to explain a wider range of concepts that more "specialized" Composite concepts. Using the above intuition as our working hypothesis, we design a roughly hierarchical clustering method called "Layered Fuzzy C-Means" to detect these layered concept clusters.
 
-\subsection{Concept Embeddings}
-\subsection{Layered Fuzzy C-Means}
+\subsubsection{Concept Embeddings}
+
+\subsubsection{Layered Fuzzy C-Means}
+\subsubsection{Computing the EC Score}
 
