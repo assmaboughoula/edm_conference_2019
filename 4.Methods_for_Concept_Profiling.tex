@@ -13,7 +13,7 @@ As we have stated in the Related Work section, the problem of extracting concept
 
 Since our work pertains specifically to educational applications, we leverage on type of unique text data ubiquitiously available for the vast majority of learning modules: textbooks. Whether a learning module is taught in a traditional class setting or offered to independent learners through MOOCs, the subjects of the vast majority of learning modules have probably been covered by some textbook. What makes textbooks particularly useful to us as opposed to other types of educational text data is that each textbook has an expertly curated, clean, and complete list of concept phrases covered in the textbook; namely the textbook's index. Using the text data and index list of phrases from a textbook, we train a neural network to automatically identify and label concept phrases in other types of educational text data which cover the same subject, such as MOOC lecture transcripts, and which do not have a predefined index. In section \ref{experiment_setup} we describe such a setup using two textbooks and four MOOCs which cover the same topics. In the rest of this section, we describe the design of the auto-indexing neural network we used.
 
-%add old text
+%add info about stemming and preprocessing
 The concept phrase extraction task is given a text document, and asked to determine which words and phrases in the text represent concepts and which do not. For this task we use the raw text from our textbook data sets as documents, and use the index from each textbook as labels. This is quite similar to the NP Chunking problem, wherein we must determine which parts of the text are Noun Phrases. We use a basic IOB (Inside, Outside, Beginning) scheme for our chunking.
 Our neural network is designed to produce a ``B'' tag for the first word in a keyphrase in the textbook's index and then an ``I'' tag for every word following the first word in the same keyphrase. If a word is not part of any keyphrase, then it is tagged with an ``O''.
 
@@ -45,11 +45,25 @@ The input for the Layered Fuzzy C-Means is: 1) $X$: a 64 by N matrix which holds
 The Layered Fuzzy C-Means outputs: 1) a dictionary of layer cluster membership matrices:  $U = \{i: U_{i} | for\ each\ layer\ i\}$ where each $U_{i}$ is a $C_{i}$ by $N$ matrix where $C_{i}$ is the number of clusters in layer $i$, 2) a dictionary of layer quality indices: $Q = \{i: q_{i} | for\ each\ layer\ i\}$.
 
 The first iteration of Layered Fuzzy C-Means runs the $skfuzzy$'s python library implementation of the Fuzzy C-Means algorithm $fcm()$ \cite{} on the data matrix $X$ with number of clusters initialized to $INIT\_CLUSTERS$. The resulting membership probability matrix is saved to the dictionary $U$. For each subsequent iteration, the number of clusters $INIT\_CLUSTERS$ is decremented by 1; the final iteration runs $fcm()$ with number of clusters equal to 1. Figure \ref{layered_fcm} details our implementation of the Layered Fuzzy C-Means.
+% add algorithm figure
 
 \subsubsection{Postprocessing for Hard Cluster Membership}
+Once our Layered Fuzzy C-Means algorithm outputs the dictionary of layer cluster membership probability matrices $U$, we need to perform some postprocessing to define the hard borders of each cluster in each layer. This will convert each $U_{i}$ in the dictionary from a probability matrix to a matrix $H_{i}$ of 1's and 0's, where an entry of 1 at position $(k, j)$ indicates that the $j$'th data point belongs to the $k$'th cluster in the layer, whereas an entry of 0 indicates that the data point does not belong to the cluster. This postprocessing step is needed both for calculating the clustering quality in \ref{pruning_layers} and for calculating the EC Score in \ref{calc_ec}.
 
-\subsubsection{Pruning for Quality Layers}
+Let $u_{k,j}$ be the probability entry at position $(k,j)$ of the layer matrix $U_{i}$. We calculate the entry $h_{k,j}$ of the matrix $H_{i}$ using the formula:
+
+\begin{equation}
+h_{k,j} = 
+\begin{cases}
+    1,& \text{if } u_{k,j}\geq max_{k,j}(U_{i}) * min_p\\
+    0,              & \text{otherwise}
+\end{cases}
+\end{equation}
+
+where $max_{k,j}(U_{i})$ is the value of the largest membership probability entry in $U_{i}$ and $min_p \in [0,1]$ is a user defined input to the Layered Fuzzy C-Means.
+
+\subsubsection{Pruning for Quality Layers}\label{pruning_layers}
 
 
-\subsubsection{Computing the EC Score}
+\subsubsection{Computing the EC Score}\label{calc_ec}
 
