@@ -38,6 +38,18 @@ Since we have already trained a bidirectional LSTM to detect concept keywords an
 We found that using the bidirectional embedding vectors from our trained LSTM yields higher quality concept clusters than other commonly used word embedding methods such as Word2Vec \cite{}. It also does not present us the problem of how to combine individual word embeddings into multi-word concept phrase embeddings; and since different concepts might consist of different length phrases, simply concatenating word embeddings to form phrase embeddings is not feasable. Further work on obtaining high quality concept phrase embeddings is left as a future work direction.
 
 \subsubsection{Layered Fuzzy C-Means}
+Our Layered Fuzzy C-Means clustering algorithm follows a loosely hierarchical clustering scheme where each iteration or "layer" consists of a run of the Fuzzy C-Means algorithm. The Fuzzy C-Means algorith was first introduced by ... in 198.. \cite{} and later improved by .. \cite{}. It is the standard algorithm for fuzzy clustering; the counterpart to the well known K-Means \cite{}. Fuzzy clustering expresses cluster membership as a probability distribution thus allowing data points to potentially belong to multiple "overlapping" clusters if their cluster membership probability passes a certain threshold. This is important for our purpose since our working hypothesis is that a more Elemental concept would be used to explain other Composite concepts, thus it would make sense for the more Elemental concept to belong to multiple clusters representing the Composite concepts it helps explain. See Figure \ref{concept_space}.
+
+The input for the Layered Fuzzy C-Means is: 1) $X$: a 64 by N matrix which holds the 64 dimensional concept embeddings of the learning module's N extracted concepts from the Concept Extraction step \ref{extraction}, 2) the parameter $INIT_CLUSTERS$ which is a function of $N$ which specifies the number of clusters in the initial layer, 3) and the parameters $min_p$ and $min_q$ which specify the probability threshold for cluster membership and the clustering quality threshold for retaining layers.
+
+The Layered Fuzzy C-Means outputs: 1) a dictionary of layer cluster membership matrices:  $U = {i: U_{i} | for each layer i}$ where each $U_{i}$ is a $C_{i}$ by $N$ matrix where $C_{i}$ is the number of clusters in layer $i$, 2) a dictionary of layer quality indices: $Q = {i: q_{i} | for each layer i}$.
+
+The first iteration of Layered Fuzzy C-Means runs the $skfuzzy$'s python library implementation of the Fuzzy C-Means algorithm $fcm()$ \cite{} on the data matrix $X$ with number of clusters initialized to $INIT_CLUSTERS$. The resulting membership probability matrix is saved to the dictionary $U$. For each subsequent iteration, the number of clusters $INIT_CLUSTERS$ is decremented by 1; the final iteration runs $fcm()$ with number of clusters equal to 1. Figure \ref{layered_fcm} details our implementation of the Layered Fuzzy C-Means.
+
+\subsubsection{Postprocessing for Hard Cluster Membership}
+
+\subsubsection{Pruning for Quality Layers}
+
 
 \subsubsection{Computing the EC Score}
 
