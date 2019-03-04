@@ -18,10 +18,17 @@ The concept phrase extraction task is given a text document, and asked to determ
 Our neural network is designed to produce a ``B'' tag for the first word in a keyphrase in the textbook's index and then an ``I'' tag for every word following the first word in the same keyphrase. If a word is not part of any keyphrase, then it is tagged with an ``O''.
 
 We used a fairly simple LSTM network to perform the tagging. We split each dataset into 75\% train and 25\% test. We trained each model over 8 epochs. We used a word embedding dimension and a hidden state dimension of 32. We use a single LSTM layer and then an addition linear layer which maps the hidden state of the LSTM to the tag space. We then perform a softmax over our tags. Our prediction is the max over our different tags.
+%add figure of NN setup
 
 
 \subsection{Discovery of Elemental and Composite Concepts}
 
-Here we describe the proposed (new) methods for discovering the two kinds of concepts. 
+%Here we describe the proposed (new) methods for discovering the two kinds of concepts. 
 
-Since this is a new challenge, we should devote most of our effort here to improve the methods. We may also propose multiple strategies if possible. 
+%Since this is a new challenge, we should devote most of our effort here to improve the methods. We may also propose multiple strategies if possible. 
+
+The intuition behind our method for ranking concepts according to their EC Score is the observation that in a learning module, new concepts are introduced using other more elemental concepts. For example, in Caclulus, the concept "derivative" can be introduced to students using concepts such as "function", "slope", and "tangent". Later on in Multivariabel Calculus, "differential" and "derivative" can be used to introduce the concept of "partial derivative" to students. In general, a learning module's Concept Profile follows a roughly hierarchical structure with more Elemental concepts being used to explain or introduce more Composite concepts on the EC Score scale. Figure \ref{concept_space} illustrates this roughly hierarchical layered clusters structure to the learning module's Concept Profile. Intuitively, we expect that the more Elemental a concept is, the more clusters it is a part of, whereas the more Composite a concept is, the less clusters it appears in. This makes sense because more Elemental concepts can be used to explain a wider range of concepts that more "specialized" Composite concepts. Using the above intuition as our working hypothesis, we design a roughly hierarchical clustering method called "Layered Fuzzy C-Means" to detect these layered concept clusters.
+
+\subsection{Concept Embeddings}
+\subsection{Layered Fuzzy C-Means}
+
