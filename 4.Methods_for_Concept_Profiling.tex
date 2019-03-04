@@ -77,4 +77,10 @@ where $B_{i}(k)$ measures the between cluster variance of the $k$ clusters in la
 We calculate $HC-Index_{i}$ for each layer $i$ and store it in the layer quality index dictionary $Q$ as $q_{i}$. Finally, we only retain layers with $q_{i} \geq max_{i}(q_{i}) * min_q$.
 
 \subsubsection{Computing the EC Score}\label{calc_ec}
+As stated in the overview of our approach, we need to rank the concepts (or data points in the matrix $X$) by their EC Score which indicates how Elemental or Composite a concept is. The intuition behind our definition of the EC Score for concepts is this: concepts towards the "Composite" end of the EC Score scale will tend to be mentioned in fewer concepts' explanations than those that are towards the "Elemental" end of the EC Score scale. Translating this in terms of the output of our Layered Fuzzy C-Means; the fewer clusters a data point belongs to over all retained layers, the more "Composite" it is. Thus we define the EC Score of a concept $n$ from the data point matrix $X$ as:
 
+\begin{equation}
+EC-Score_{n} = normalize(\sum_{all\ i,k} H_{i}(k,n))
+\end{equation}
+
+We normalize the EC Score so that it's between 0 and 1, with the most Elemental concepts having score 1 and the most Composite concepts having score 0. Since EC Scores are heavily dependent on the learning module's text data and specific context, we do not choose a hard boundary value for the EC Score to delineate Elemental concepts from Composite concepts; such a hard boundary is left to the user and the particular application.
