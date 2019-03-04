@@ -4,18 +4,23 @@ In this section we present results from experiments over our data sets. Since ou
 \subsection{Data Sets}
 Our data consists of two textbooks and four MOOC courses's lecture transcripts. The textbooks are: 1) "Text Data Management and Analysis: A Practical Introduction to Information Retrieval and Text Mining" by ChengXiang Zhai and Sean Massung \cite{} , 2) Third edition of "Data Mining: Concepts and Techniques" by Jaiwei Han, Micheline Kamber, and Jian Pei \cite{}. Both textbooks are available open source through the first authors' web pages. The four MOOC courses courses 2 to 5 in the Data Mining Specialization on Coursera.\footnote{\url{https://www.coursera.org/specializations/data-mining}.} Namely: 1) Text Retrieval and Search Engines, 2) Text Mining and Analytics, 3) Pattern Discovery in Data Mining, and 4) Cluster Analysis in Data Mining. All four MOOCs' lecture transcripts can be freely obtained from Coursera.
 
-We chose this particular collection of data sets for several reasons: first, the first two MOOCs cover roughly the same material as the first textbook, while the last two MOOCs cover roughly the same material as the second textbook. Thus, we are able to train our biLSTM on each of the textbooks and their indices and then run it on the corresponding MOOC data to extract high quality concept phrases. The second reason is that the first authors of the textbooks are the instructors who designed each of the corresponding MOOC courses. This increases the quality of the concept extraction results as well since ambiguity and variation of concept phrases are at a minimum.
+We chose this particular collection of data sets for several reasons: first, the first two MOOCs cover roughly the same material as the first textbook, while the last two MOOCs cover roughly the same material as the second textbook. Thus, we are able to train our biLSTM on each of the textbooks and their indices and then run it on the corresponding MOOC data to extract high quality concept phrases. The second reason is that the first authors of the textbooks are the instructors who designed each of the corresponding MOOC courses. This increases the quality of the concept extraction results as well since ambiguity and variation of concept phrases are at a minimum. Table \ref{} shows some statistics about our textbook data sets, and table \ref{} shows some statistics about our MOOC data sets.
 
+%ADD TABLES FOR TEXTBOOK AND MOOC DATA: NUMBER OF WORDS, LENGTH OF INDEX FOR TEXTBOOK, NUMBER OF LECTURES FOR MOOC.
 
 \subsection{Experiment Design}
+For our experiment, we trained two LSTM models one on each textbook. We ran the first trained LSTM model on MOOC1 and MOOC2, and the second trained LSTM model on MOOC3 and MOOC4 to extract concept phrases from the respective MOOC's lecture transcripts. Table \ref{} shows statistics for the extracted concepts from the four MOOCs.
+For each one of our six data sets (2 textbooks and 4 MOOCs), we ran the Layered Fuzzy C-Means clustering algorithm to get the clusters and retained layers and the ranked list of concepts and their EC Scores. Detailed parameter values and experimental results are presented in \ref{exp_results}
 
-\subsection{Experiment Results}
+\subsection{Experiment Results}\label{exp_results}
+
 
 \subsubsection{Qualitative Analysis}
 
 %Here we show sample ranked lists (top-k) for multiple MOOCs, and discuss the quality of the results. We want to show that they can indeed be useful to help learners assess the pre-requisite and the major concepts taught in a module. 
 
 \subsubsection{Quantitative Analysis}
+% AIDAN: ADD RESULTS FOR THE LSTM AND THE PLOTS OF THE ACCURACY/F1 SCORE 
 
 %Here we use the Text Retrieval MOOC to do quantitative evaluation, mainly to compare different methods and see which method is the best or examine how we can improve the accuracy. But we can also quantify the accuracy to understand the utility of the proposed methods. 
 %This should allow us to draw conclusions about which method/idea works the best.
