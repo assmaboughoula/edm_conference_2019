@@ -10,19 +10,33 @@ We chose this particular collection of data sets for several reasons: first, the
 
 \subsection{Experiment Design}
 For our experiment, we trained two LSTM models one on each textbook. We ran the first trained LSTM model on MOOC1 and MOOC2, and the second trained LSTM model on MOOC3 and MOOC4 to extract concept phrases from the respective MOOC's lecture transcripts. Table \ref{} shows statistics for the extracted concepts from the four MOOCs.
-For each one of our six data sets (2 textbooks and 4 MOOCs), we ran the Layered Fuzzy C-Means clustering algorithm to get the clusters and retained layers and the ranked list of concepts and their EC Scores. Detailed parameter values and experimental results are presented in \ref{exp_results}
+For each one of our six data sets (2 textbooks and 4 MOOCs), we ran the Layered Fuzzy C-Means clustering algorithm to get the clusters and retained layers and the ranked list of concepts and their EC Scores. Detailed parameter values and experimental results are presented in \ref{exp_results}. 
 
 \subsection{Experiment Results}\label{exp_results}
 % AIDAN: are there any initialization parameters for the concept extraction LSTM?
-Table \ref{} presents the initialization values for the parameters $INIT\_CLUSTERS$, $min_p$, and $min_q$ for each of our data sets when running the Layered Fuzzy C-Means algorithm. The following subsection \ref{qualitative} discusses the qualitative results obtained from these runs and presents visualizations for the layer clusters and EC Scores.
+Table \ref{} presents the initialization values for the parameters $INIT\_CLUSTERS$, $min_p$, and $min_q$ for each of our data sets when running the Layered Fuzzy C-Means algorithm. The following subsection \ref{qualitative} discusses the qualitative results obtained from these runs and presents visualizations for the layer clusters and EC Scores. For the purpose of visualizations, all data points have been reduced from 64 dimensional vectors to 2D vectors using Principal Component Analysis.
 
 \subsubsection{Qualitative Analysis}\label{qualitative}
 
 %Here we show sample ranked lists (top-k) for multiple MOOCs, and discuss the quality of the results. We want to show that they can indeed be useful to help learners assess the pre-requisite and the major concepts taught in a module. 
+Figure \ref{han_clusters} shows the retained layers and clusters for Textbook 1: "Data Mining: Concepts and Techniques". The left top-most subplot of the figure shows all data points in the input matrix $X$ plotted in 2D. Each subsequent subplot represents a retained layer from the Layered Fuzzy C-Means algorithm and the "hard border" clusters in that layer. As you can see, we retain 21 layers for Textbook 1. Figure \ref{han_layer_qual} shows the retained layers (labeled in blue) against their Calinski Harabaz Index for clustering quality. All plotted layers have passed the CH Index threshold, but we further drop the layers (labeled in grey) that have less than two data point plotted as belonging to clusters in that layer, or for which $\sum H_{i} \leq 1$. Figure \ref{han_EC} plots the extracted concepts versus their EC Score sorted in a decreasing order. We can see from the figure that "randomization methods" is more Elemental than "attribute construction" which is more Elemental than "fuzzy clustering". Figures \ref{} to \ref{} present the visual results for Textbook 2: "Text Data Management and Analysis: A Practical Introduction to Information Retrieval and Text Mining", and Figures \ref{} to \ref{} present the visual results for MOOC 1 through 4. 
+
 \begin{figure*}[t]
 	\includegraphics[width=0.5\textwidth, left]{figures/han_bidi_clusters_1.png}
-	\caption{Retained layers and clusters for textbook 1: "Data Mining: Concepts and Techniques"}
+	\caption{Retained layers and clusters for Textbook 1: "Data Mining: Concepts and Techniques"}
 	\label{han_clusters}
+\end{figure*}
+
+\begin{figure*}[t]
+	\includegraphics[width=0.5\textwidth, left]{figures/han_bidi_layer_qual_1.png}
+	\caption{CH Index for layer quality for Textbook 1: "Data Mining: Concepts and Techniques"}
+	\label{han_layer_qual}
+\end{figure*}
+
+\begin{figure*}[t]
+	\includegraphics[width=0.5\textwidth, left]{figures/han_bidi_EC_scores_good1.png}
+	\caption{Decreasing EC Score for Textbook 1 concepts}
+	\label{han_EC}
 \end{figure*}
 
 \subsubsection{Quantitative Analysis}\label{quantitative}
